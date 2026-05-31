@@ -259,7 +259,6 @@ footer{background:#141412;color:#8A857D;padding:72px 0 36px;font-size:14px}
 }
 /* ===== PER-SLIDE FX ===== */
 .container{position:relative;z-index:1}
-section[data-num]::before{content:attr(data-num);position:absolute;top:36px;right:40px;font-family:var(--serif);font-style:italic;font-size:clamp(64px,12vw,170px);line-height:1;color:currentColor;opacity:.05;pointer-events:none;z-index:0;font-weight:600}
 .feature{position:relative;overflow:hidden}
 .feature::before{content:'';position:absolute;top:0;left:0;height:3px;width:0;background:var(--gold);transition:width .55s var(--ease)}
 .feature:hover::before{width:100%}
@@ -274,7 +273,7 @@ section[data-num]::before{content:attr(data-num);position:absolute;top:36px;righ
 .about-media .badge{animation:bob 6s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-9px)}}
 .cta .glow{animation:pulse 7s ease-in-out infinite}
-@keyframes pulse{50%{transform:translateX(-50%) scale(1.18);opacity:.75}}
+@keyframes pulse{50%{opacity:.85}}
 /* ===== PREMIUM FX ===== */
 #pre{position:fixed;inset:0;z-index:10000;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:22px;transition:opacity .9s var(--ease),visibility .9s}
 #pre.done{opacity:0;visibility:hidden}
@@ -294,6 +293,17 @@ section[data-num]::before{content:attr(data-num);position:absolute;top:36px;righ
 @keyframes float1{50%{transform:translate(-44px,46px)}}
 @keyframes float2{50%{transform:translate(46px,-34px)}}
 .btn{will-change:transform}
+.hero .container{will-change:transform,opacity}
+/* per-slide entrance variety */
+.feature.reveal{transform:translateY(60px)}
+.svc.reveal{transform:scale(.92)}
+.proj.reveal{transform:scale(.94) translateY(30px)}
+.cat.reveal{transform:translateY(50px) scale(.96)}
+.step.reveal{transform:translateX(-44px)}
+.rev.reveal{transform:scale(.93)}
+.post.reveal{transform:translateY(60px)}
+.about-media.reveal{transform:translateX(-60px)}
+.feature.reveal.in,.svc.reveal.in,.proj.reveal.in,.cat.reveal.in,.step.reveal.in,.rev.reveal.in,.post.reveal.in,.about-media.reveal.in{transform:none}
 </style>
 </head>
 <body>
@@ -478,7 +488,6 @@ const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.t
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 const hdr=document.getElementById('hdr');
 const totop=document.getElementById('totop');
-addEventListener('scroll',()=>{const y=scrollY;hdr.classList.toggle('scrolled',y>40);totop.classList.toggle('show',y>600);});
 totop.onclick=()=>scrollTo({top:0,behavior:'smooth'});
 // mobile menu
 const burger=document.getElementById('burger');
@@ -494,12 +503,14 @@ addEventListener('load',()=>{setTimeout(()=>document.getElementById('pre').class
 setTimeout(()=>document.getElementById('pre').classList.add('done'),3500);
 // scroll progress
 const prog=document.getElementById('prog');
-addEventListener('scroll',()=>{const h=document.documentElement;const p=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;prog.style.width=p+'%';});
 // magnetic buttons
 document.querySelectorAll('.btn').forEach(b=>{b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();const x=e.clientX-r.left-r.width/2;const y=e.clientY-r.top-r.height/2;b.style.transform=`translate(${x*.3}px,${y*.45}px)`});b.addEventListener('mouseleave',()=>b.style.transform='')});
 // hero parallax + fade
 const heroC=document.querySelector('.hero .container');
-addEventListener('scroll',()=>{const y=scrollY;if(heroC&&y<innerHeight){heroC.style.transform=`translateY(${y*.25}px)`;heroC.style.opacity=Math.max(0,1-y/innerHeight*1.15);}});
+// consolidated scroll handler (rAF — плавно, без лагов)
+let ticking=false;
+const onScroll=()=>{const y=window.scrollY;hdr.classList.toggle('scrolled',y>40);totop.classList.toggle('show',y>600);const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';if(heroC&&y<innerHeight){heroC.style.transform='translateY('+(y*.25)+'px)';heroC.style.opacity=Math.max(0,1-y/innerHeight*1.15);}ticking=false;};
+addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(onScroll);ticking=true;}},{passive:true});
 // 3D tilt on cards
 document.querySelectorAll('.proj,.cat').forEach(c=>{c.classList.add('tilt');c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();const px=(e.clientX-r.left)/r.width-.5;const py=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(800px) rotateY(${px*9}deg) rotateX(${-py*9}deg) translateY(-4px)`});c.addEventListener('mouseleave',()=>c.style.transform='')});
 </script>
