@@ -142,14 +142,16 @@ header.scrolled .burger{color:var(--graphite)}
 /* catalog */
 .cat-wrap{background:var(--beige)}
 .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
-.cat{background:var(--cream);border-radius:3px;overflow:hidden;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
-.cat:hover{transform:translateY(-8px);box-shadow:0 24px 50px -22px rgba(46,46,44,.4)}
-.cat .ph{overflow:hidden;height:220px}
-.cat img{height:100%;width:100%;object-fit:cover;transition:transform .8s var(--ease)}
-.cat:hover img{transform:scale(1.08)}
-.cat .b{padding:22px}
-.cat h4{font-family:var(--serif);font-size:18px;margin-bottom:5px}
-.cat span{font-size:13px;color:var(--taupe)}
+.cat{position:relative;border-radius:4px;overflow:hidden;cursor:pointer;aspect-ratio:3/4}
+.cat img{height:100%;width:100%;object-fit:cover;transition:transform .9s var(--ease)}
+.cat::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 30%,rgba(28,28,26,.88));transition:.5s}
+.cat:hover img{transform:scale(1.09)}
+.cat .b{position:absolute;left:0;right:0;bottom:0;padding:28px 24px;color:var(--cream);z-index:2;text-align:center;transform:translateY(8px);transition:transform .5s var(--ease)}
+.cat:hover .b{transform:translateY(0)}
+.cat h4{font-family:var(--serif);font-size:22px;margin-bottom:6px;color:var(--cream)}
+.cat .b span{font-size:12.5px;color:var(--beige);letter-spacing:.5px;opacity:.9}
+.cat .b .ln{display:block;width:0;height:1px;background:var(--taupe);margin:14px auto 0;transition:width .55s var(--ease)}
+.cat:hover .b .ln{width:46px}
 /* reviews */
 .rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
 .rev{padding:42px 38px;border:1px solid var(--grey);border-radius:3px;background:var(--cream);transition:.5s var(--ease)}
@@ -159,13 +161,13 @@ header.scrolled .burger{color:var(--graphite)}
 .rev b{font-family:var(--serif);font-style:normal;font-size:17px}
 .rev small{display:block;font-size:13px;color:var(--taupe);margin-top:2px}
 /* blog */
-.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
-.post{border-radius:3px;overflow:hidden;background:var(--cream);transition:.5s var(--ease)}
-.post:hover{transform:translateY(-8px)}
-.post .ph{overflow:hidden;height:230px}
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:34px}
+.post{border-radius:4px;overflow:hidden;background:var(--cream);box-shadow:0 12px 34px -22px rgba(46,46,44,.4);transition:.5s var(--ease)}
+.post:hover{transform:translateY(-8px);box-shadow:0 26px 50px -24px rgba(46,46,44,.5)}
+.post .ph{overflow:hidden;height:240px}
 .post img{height:100%;width:100%;object-fit:cover;transition:transform .8s var(--ease)}
 .post:hover img{transform:scale(1.07)}
-.post .b{padding:26px 4px}
+.post .b{padding:30px 28px}
 .post span{font-size:11px;color:var(--taupe);letter-spacing:2px}
 .post h3{font-size:21px;margin:10px 0 8px;font-weight:500}
 .post p{color:var(--muted);font-size:15px}
@@ -236,6 +238,7 @@ footer{background:#141412;color:#8A857D;padding:72px 0 36px;font-size:14px}
   .hero-actions{flex-direction:column;width:100%}
   .hero-actions .btn{width:100%}
   .features,.svc-grid,.gallery,.steps,.cat-grid,.blog-grid,.rev-grid{grid-template-columns:1fr}
+  .cat{aspect-ratio:16/11}
   .feature{padding:40px 28px}
   .svc{padding:36px 30px}
   .svc::before{top:24px;right:30px;font-size:26px}
@@ -245,7 +248,7 @@ footer{background:#141412;color:#8A857D;padding:72px 0 36px;font-size:14px}
   .stats{gap:30px}
   .stats .num{font-size:38px}
   .proj{aspect-ratio:3/4}
-  .post .b{padding:24px 2px}
+  .post .b{padding:26px 24px}
   .c-grid{grid-template-columns:1fr;gap:40px}
   .foot-top{grid-template-columns:1fr;gap:32px}
   .foot-bot{flex-direction:column;gap:8px}
@@ -278,7 +281,6 @@ footer{background:#141412;color:#8A857D;padding:72px 0 36px;font-size:14px}
 <a href="#portfolio" class="btn">Смотреть проекты</a>
 </div>
 </div>
-<div class="scroll-ind"><span>Листайте</span><div class="line"></div></div>
 </section>
 
 <!-- MARQUEE -->
@@ -360,10 +362,10 @@ footer{background:#141412;color:#8A857D;padding:72px 0 36px;font-size:14px}
 <section class="cat-wrap" id="catalog"><div class="container">
 <div class="section-head reveal"><p class="eyebrow">Комплектация</p><h2>Подбираем лучшее для вашего интерьера</h2><p>Работаем с проверенными поставщиками мебели, света и техники.</p></div>
 <div class="cat-grid">
-<div class="cat reveal"><div class="ph"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=500&q=80"></div><div class="b"><h4>Мебель</h4><span>Диваны, кресла, столы</span></div></div>
-<div class="cat reveal d1"><div class="ph"><img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=500&q=80"></div><div class="b"><h4>Свет</h4><span>Люстры, бра, торшеры</span></div></div>
-<div class="cat reveal d2"><div class="ph"><img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=500&q=80"></div><div class="b"><h4>Техника</h4><span>Кухня и бытовая</span></div></div>
-<div class="cat reveal d3"><div class="ph"><img src="https://images.unsplash.com/photo-1567016432779-094069958ea5?auto=format&fit=crop&w=500&q=80"></div><div class="b"><h4>Декор</h4><span>Текстиль, аксессуары</span></div></div>
+<div class="cat reveal"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=500&q=80"><div class="b"><h4>Мебель</h4><span>Диваны, кресла, столы</span><i class="ln"></i></div></div>
+<div class="cat reveal d1"><img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=500&q=80"><div class="b"><h4>Свет</h4><span>Люстры, бра, торшеры</span><i class="ln"></i></div></div>
+<div class="cat reveal d2"><img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=500&q=80"><div class="b"><h4>Техника</h4><span>Кухня и бытовая</span><i class="ln"></i></div></div>
+<div class="cat reveal d3"><img src="https://images.unsplash.com/photo-1567016432779-094069958ea5?auto=format&fit=crop&w=500&q=80"><div class="b"><h4>Декор</h4><span>Текстиль, аксессуары</span><i class="ln"></i></div></div>
 </div>
 </div></section>
 
